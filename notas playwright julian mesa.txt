@@ -1,0 +1,93 @@
+otro curso que he mirado rapido https://www.youtube.com/watch?v=ovEhcf7c8Y4&ab_channel=InformaticaLive 4 horas y mdia todo en el mismo video 
+
+https://www.youtube.com/playlist?list=PLXOcVQr8g7b-BL5sf4LXl1Mmi8Er3XJdF en este vi lo del inspector
+
+
+
+https://www.bing.com/videos/search?q=curso+playwright&&view=detail&mid=8EAC8E6799EC287E01C78EAC8E6799EC287E01C7&FORM=VAMGZC
+
+PLAYLIST 
+https://www.youtube.com/playlist?list=PLeo6Q1inqlOdzwuW6ivlX_95682PfsGGG
+
+2-
+
+genera toda la config para lo que nos va pidiendo...typescript, donde pondré los tests , no usaré github , descarga todos los browsers para ejecutar 
+npm init playwright@latest
+arma todo playwright.config.ts -- comento resto navegadores que no sea chromium - 
+package.json opne la version de playwright q vamos a usar 
+
+
+ejecutar los test por consola - npx playwright test o con icono matrás + play 
+
+npx playwright show-report para ver el report 
+
+3- 
+headless por defecto no abre browser- cambiar en playwright.config.ts ---> use: headless:false 
+uso de localizadores en una pagina de venta d móviles
+
+4- 
+obtención de los títulos del resultado de busqueda de iphones e imprimirlos , obteniéndolos con xpath y con css (ojo que el xpath q pone el no funciona porque ahora la pagina imprime de otra manera 
+		son li con h2  //ol[contains(@class,'ui-search-layout')]//li//h2 
+		
+		
+		//ol[contains(@class,'ui-search-layout')]//a[contains(@class,'poly-component__title')]
+		
+5- herramienta code generator - abre  navegador y hace acciones y las graba para darnos idea 
+npx playwright codegen https://www.alten.es 
+matraz - menu abajo  de playwright - record new y crea un test....spect.ts vacio q vamos rellenando 
+
+desde linea de comando lanza el inspector c:\ROCIO\FORMACION\PLAYWRIGHT\cusro julianmesa>npx playwright codegen https://saucedemo.com
+...limpiar todo lo que no me conviene 
+
+6- busqueda por xpath y selectors css 
+ 
+ xpath sera con doble slash sera relativo y simple slash sera absoluto 
+ //elemento[@idpropiedad=""]
+ ejemplo 
+ //input[@type='text]
+ //input[@name='nombre de l input']
+ //input[@class='nombrfeclase']
+ 
+ CSS 
+ elemento[propiedad="valor] o bien tipo shortcut elemento.nombrepropiedad (by propiedad) 
+ > para hacer relativo
+ 
+ input.nombrecalse
+ input.nombredelname 
+ 
+ para playwright await page.locator('xpath=//input....').fill('algo') sin la palabra xpath tb vale con la doble slash entiende q es un xpath y si ponemos aspecto de css selector lo entiende tambien 
+ 
+7- getByPlaceholder , getByAltText, getByRole(accesibilidad)
+
+ej de DOM <input type="email" placeholder="name@example.com"....
+
+getByAltText basado en la propiedad alt descripción de la imagen que viene en las imagenes <img alt='Playwright logo'>
+
+minuto 8 aprox¿como saber el role de un elemento?-inspect- elements-accesibility muestra arbol de accesibilidad y ahí con el sombreado y en la parte de la pestaña de accesibilidad me muestra el role
+
+si hay dos roles con el mismo identificador y el name por ejemplo que los dos contienen la palabra que busco por ejemplo me daría error --> añado exact:true es decir el name específico q pongo
+await page.getByRole('link', {name:'palabra',exact:true}).click()
+
+8- automatizcacacion de una compra saucedemo.com 
+lo he hecho con IA ---pone locators...luego he usado los Role cuando podía 
+uso de toEqual comparativa de dos tipos primitivos en aserciones 
+uso locator.all --- para obtener toda  la lista de localizadores 
+uso de innerText en lugar de textContent pq muestra texto tal cual lo ve el usuario 
+
+9- actualizació de playwright - fichero package.json - dice con lo que estoy , saber cual es la current y si esta actualizada npm outdate @playwright/test
+npm install -D @playwritght/test@latest (la última o bien @version la que queramos
+asociado hay que actualizar los browsers q realmente están en esta - ruta miusuario/AppData/local/ms-playwright ---> ejecuto npm playwritght install y se descarga nueva vers de navegadores
+
+10-continuar con el checkout 
+page.pause --- > me está sacando el inspector y le tengo q dar a continuar 
+importante...Role no era representativo asi que mejor cojo css para el caso del botón de carrito
+
+11- PAGE OBJECT MODEL https://www.youtube.com/watch?v=cxBRyfnwkkk&list=PLeo6Q1inqlOdzwuW6ivlX_95682PfsGGG&index=11&ab_channel=JulianMesa
+separa logica de acciones con la pagina 
+pagina de login 1- localizacion de elementos 2- interaccion fill 
+pagina de listado de productos
+pagina d carrito
+pagina de checkout --- primero echar un vistazo al curso y lluego cambiar mi modelo 
+
+
+
