@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 10 ##tiempo max ejecucion test
     runs-on: ubuntu-latest ##contenedor donde se va a ejecutar el test
     steps:
-      - uses: actions/checkout@v
+      - uses: actions/checkout@v4
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
