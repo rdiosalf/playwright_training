@@ -1,0 +1,29 @@
+#automatizacion de que cuando hagamos un push se corran todas las pruebas
+name: Playwright Tests   
+##acciones  
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+## trabajo que se va a ejecutar 
+jobs:
+  test:
+    timetout-minutes: 10 ##tiempo max ejecucion test
+    runs-on: ubuntu-latest ##contenedor donde se va a ejecutar el test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: npm install
+      - run: npx playwright install --with-deps
+      - run: npx playwright test --reporter=html  ##ejecutar los test 
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v2
+        if: always()  ##siempre se ejecuta
+        with:   ##genera reporte y lo deja en la carpeta playwright-report y lo deja 30 dias
+          name: playwright-report
+          path: playwright-report
+          retention-days: 30
