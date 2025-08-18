@@ -167,5 +167,8 @@ abre navegador y inspector de playwright donde con flecha curva puedo ir step a 
 
 analizamos variables ejecutando desde el VSCode con Breakpoints incluso cambiar valor addwatch +set value con botón derecho 
 
-20-uso con github actions 
+20-uso con github actions y definir flujo de trabajo
+documentacion playwright.dev/docs/ci-intro 
+bajo .github creo directorio workflows y fichero playwright.yml
+
 

@@ -9,7 +9,7 @@ on:
 ## trabajo que se va a ejecutar 
 jobs:
   test:
-    timetout-minutes: 10 ##tiempo max ejecucion test
+    timeout-minutes: 10 ##tiempo max ejecucion test
     runs-on: ubuntu-latest ##contenedor donde se va a ejecutar el test
     steps:
       - uses: actions/checkout@v2
