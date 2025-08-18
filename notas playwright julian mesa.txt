@@ -169,6 +169,8 @@ analizamos variables ejecutando desde el VSCode con Breakpoints incluso cambiar 
 
 20-uso con github actions y definir flujo de trabajo
 documentacion playwright.dev/docs/ci-intro 
-bajo .github creo directorio workflows y fichero playwright.yml
+creamos carpeta .github otra workflows y fichero playwright.yml --- practicamente lo he hecho con ia aunque el video pone otras opciones
+subimos todo esto nuevo ---> ver en mi repo una pestaña Actions 
+como en las máqunas q ejecuta github Actions no tiene ifz grafica ponemos en configuración de playwright ponemos HEADLESS true 
 
 

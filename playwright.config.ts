@@ -44,7 +44,8 @@ timeout: 60_000,
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    headless: false, // Set to false if you want to see the browser in action
+    headless: true, // para ejecutar en github actions y no ver el navegador 
+    //headless: false, // Set to false if you want to see the browser in action
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
 
