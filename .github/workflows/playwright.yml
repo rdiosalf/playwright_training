@@ -12,16 +12,16 @@ jobs:
     timeout-minutes: 10 ##tiempo max ejecucion test
     runs-on: ubuntu-latest ##contenedor donde se va a ejecutar el test
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '18'
       - run: npm install
       - run: npx playwright install --with-deps
       - run: npx playwright test --reporter=html  ##ejecutar los test 
       - name: Upload Test Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         if: always()  ##siempre se ejecuta
         with:   ##genera reporte y lo deja en la carpeta playwright-report y lo deja 30 dias
           name: playwright-report
