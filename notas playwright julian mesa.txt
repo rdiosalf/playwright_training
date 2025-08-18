@@ -87,7 +87,85 @@ separa logica de acciones con la pagina
 pagina de login 1- localizacion de elementos 2- interaccion fill 
 pagina de listado de productos
 pagina d carrito
-pagina de checkout --- primero echar un vistazo al curso y lluego cambiar mi modelo 
+pagina de checkout 
+12- pageobject d loginpage con distintos ususaraios
+13- configuracion de distintos ambientes por fichero , lectura de variables de ese fichero
+playwright.config.ts --buscar dond pone read environment variables from file - tenemos q instalar npm i dotenv --save-dev
+para hacer esta lectura hay que usar la libreria dotenv por eso instalo 
+y descomento en el playwright.config.ts la parte de require... para que así sepa leer el archivo que le pongo 
+
+14-testing de tablas
+busqueda de selectores con chrome inspector (ctrol- f) 
+//table[@id='countries']
+busqueda de filas y columnas //table[@id='countries']//tr[2]//td[5]
+
+en configuracion timeout se puede configurar dentro de define config 
+ timeout: 60_000, 
+  expect:{
+    timeout: 200_000
+  },
+  para este ejercicio que tomará mucho tiempo lo ponemos a 60mil milisec 
+https://www.youtube.com/watch?v=SvrIsoDd01w&list=PLeo6Q1inqlOdzwuW6ivlX_95682PfsGGG&index=14&ab_channel=JulianMesa
+
+15- captura d pantalla
+de dos formas...o en cualquier parte- ver saucedemoScreenshot.spec.ts 
+o bien desde config 
+	en objeto use definido screenshot: { mode: 'only-on-failure', fullPage:true}, - distintos modos - on- > al final del test hace una captura 
+	
+observar en playwright-report-> index.html - btn derecho reveal in explorer y se ve que dentro del test ...todos sus pasos, añade lo que es el screeshot	
+
+si añadimos testInfo aquí test('compra de un elemento con capturas de pantalla incluidos en reporte', async ({ page }, testInfo) => {
+  y la llamada de esta forma  
+    await testInfo.attach('success screenshot', {
+    body: await page.screenshot(),
+    contentType: 'image/png'
+  });
+se ve igualmente en el index.html  y podemos ver la imagen en grande si clicamos en el fichero png 
+
+16- ejecucion por consola 
+en local como tengo el plugin de playwright puedo hacerlo con el vscode pero supongamos en un entorno de CICD
+npx playwright test - ejecuta todos los que est´n bajo la carpeta test 
+ejecutar por nombre archivo donde esta el test -g parte del nombre del test
+npx playwright test saucedemoPO.spec.ts -g "compra random" 
+ejecutar n veces el mismo test 
+npx playwright test saucedemoPO.spec.ts -g "compra random" --repeat-each-5
+
+npx playwright show-report
+
+17- INTERCEPTOR
+agilizar la carga de recursos web como por ej traer de sitio web imagenes 
+despues de ejecutar el test y dentro del browser que abre---> chrome-inspect-network 
+se ver la peticion al servidor REQUEST URL....se ve lo que trda en traer imagen 
+si elimino ese tipo de cargas, ahorro tiempo en los test 
+creo clase interceptor.spec.ts que tiene un test de login como lo q he hecho antes pero añadiendo al ppio
+await page.on("request",req => {
+  console.log("Request made with url: " + req.url());
+}); con esto logo todas las imagenes que veo q esta trayendo ,copio dos de ellas 
+Request made with url: https://www.saucedemo.com/static/media/bike-light-1200x1500.37c843b0.jpg
+Request made with url: https://www.saucedemo.com/static/media/bolt-shirt-1200x1500.c2599ac5.jpg
+y le digo que cuando se encuentre con ellas que no las cargue (puedo comprobarlo con un screenshot) 
+await page.route ('https://www.saucedemo.com/static/media/bike-light-1200x1500.37c843b0.jpg', route => {
+  console.log("Intercepted request for bike-light-1200x1500.37c 843b0.jpg");
+  route.abort();        // Abort the request
+}); incluso se pueden usar expresiones regulares para evitar imagenes 
+
+18- modificar respuesta de servicios q tardan mucho- o cambiar la respuesta de lo que devuelve el servicio...
+demoqa.com/books inspeccionamos network y vemos header - request y response con el json de los libros devueltos
+
+https://www.youtube.com/watch?v=7c-DT5fKXgI&list=PLeo6Q1inqlOdzwuW6ivlX_95682PfsGGG&index=18&ab_channel=JulianMesa
+
+ preparo un tst de forma que intercepto el rquest q me muestra los libros (lo identifico con el inspector chrome https://demoqa.com/BookStore/v1/Books)
+ 
+ y modifico la respuesta con fulfill (los datos de status los obtengo del inspector de chrome)--cambio el body de la respuesta quitando del json los libros , dejando uno solo, modificando el titulo del libro que mostraré ..etc 
 
 
+
+19- debugger
+x linea de comandos 
+npx playwright test saucedemoPODebug.spec.ts -g "login nok con usuario standar" --debug 
+abre navegador y inspector de playwright donde con flecha curva puedo ir step a step
+
+analizamos variables ejecutando desde el VSCode con Breakpoints incluso cambiar valor addwatch +set value con botón derecho 
+
+20-uso con github actions 
 

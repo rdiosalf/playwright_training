@@ -7,11 +7,30 @@ import { defineConfig, devices } from '@playwright/test';
 // import dotenv from 'dotenv';
 // import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
-
+//-----------DOS FORMAS DE CARGAR EL .ENV 
+/* import dotenv from 'dotenv';
+ import path from 'path';
+ dotenv.config({ path: path.resolve(__dirname, '.env') }); */
+ 
+ require('dotenv').config(
+  {
+      //path: `.env.qa` // Carga el archivo .env según la variable de entorno ENVIRONMENT
+      //para q funcione esto debemos ejecutar en la shell set NODE_ENV=dev o lo que sea y ejecutar el test x comando 
+      //npx playwright test tests/saucedemoPO.spec.ts:<lineadeltest>
+      path: `.env.${process.env.NODE_ENV ? process.env.NODE_ENV : 'dev'}` // Carga el archivo .env según la variable de entorno ENVIRONMENT
+  });
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+
+/*   
+comentado, solo para el test de tablas para el resto no quiero que tarde tanto en esperar 
+resultados de las pruebas
+timeout: 60_000, 
+  expect:{
+    timeout: 200_000
+  }, */
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -31,6 +50,7 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    //screenshot: { mode: 'on', fullPage:true},//un screenshot por cada test al final del todo
     screenshot: { mode: 'only-on-failure', fullPage:true},
   },
 
