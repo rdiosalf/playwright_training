@@ -26,11 +26,11 @@ export default defineConfig({
 
 /*   
 comentado, solo para el test de tablas para el resto no quiero que tarde tanto en esperar 
-resultados de las pruebas
+resultados de las pruebas*/
 timeout: 60_000, 
   expect:{
     timeout: 200_000
-  }, */
+  }, 
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,

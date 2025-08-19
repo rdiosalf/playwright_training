@@ -132,6 +132,9 @@ test('compra de un elemento con capturas de pantalla incluidos en reporte', asyn
 });
 
 test('compra de un elemento con error y capturando pantalla en el error ', async ({ page }) => {
+  if (process.env.skip_githubactions === 'true') {
+    test.skip()
+  } else {
   await page.goto('https://saucedemo.com/');
 
  //Ingreso usuario y contraseña para un usuario estandar standar_user y clave secret_sauce
@@ -186,6 +189,7 @@ test('compra de un elemento con error y capturando pantalla en el error ', async
   // Verificar mensaje de éxito
   await expect(page.locator('.complete-header')).toHaveText('Thank you for your order!');
    await page.screenshot({ path: 'screenshots/success.png' }); 
+  }
 
 });
 

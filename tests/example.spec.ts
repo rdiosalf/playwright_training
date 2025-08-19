@@ -34,7 +34,7 @@ test('mi primer test partiendo del ejemplo', async ({ page }) => {
   //  //ol[contains(@class,\'ui-search-layout\')]
   // await page.waitForTimeout(5000); visibilidad de la lista de resultados
   await expect(page.locator('//ol[contains(@class,\'ui-search-layout\')]')).toBeVisible();
-  page.pause()
+  //page.pause()
 
 
   //obteniendo los textos con xpath y lo almacenamos en un array constante
