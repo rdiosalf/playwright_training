@@ -171,6 +171,37 @@ analizamos variables ejecutando desde el VSCode con Breakpoints incluso cambiar 
 documentacion playwright.dev/docs/ci-intro 
 creamos carpeta .github otra workflows y fichero playwright.yml --- practicamente lo he hecho con ia aunque el video pone otras opciones
 subimos todo esto nuevo ---> ver en mi repo una pestaña Actions 
+al acabar la ejecucion ver trazas 
+Artifact download URL: https://github.com/rdiosalf/playwright_training/actions/runs/17040767625/artifacts/3788351276
 como en las máqunas q ejecuta github Actions no tiene ifz grafica ponemos en configuración de playwright ponemos HEADLESS true 
+puedo descargar el reporte 
+
+21-22-23-24jenkins y docker 
+docuemntacion playwright.dev/docs/docker 
+hay una imagen para correr nuestros test https://mcr.microsoft.com/en-us/artifact/mar/playwright/about 
+uso de imagen de jenkins hub.docker.com/_/jenkins e imagen de playwright
+con docker traigo l imagen de jenkins y luego dentro de jenkins necesito docker otra vez para  con este otro docker hago otra imagen de playwright 
+version específica de playwright para esto v1.40.0 pero aconsejan usar la misma imagen que yo estoy usando en mis test (recordar en package.json     "@playwright/test": "^1.54.2",) 
+otra forma es dentro del jenkins instalar todo lo de playwright 
+instalación de docker - no lo hago porq ya lo tengo 
+c:\ROCIO\FORMACION\PLAYWRIGHT\cusro julianmesa>docker --version
+Docker version 28.1.1, build 4eba377
+
+Dockerfile - a partir d la imagen de jenkins, con el usuario ROOT me traigo docker y genero imagen de jenkins , ruta donde está el archivo Dockerfile y construyo una imagen con el comando
+docker build --tag docker-in-docker-jenkins .
+crar un contenedor a partir de esa imagen con mapeo al pto 8080 -name el nombre q le doy al contenedor y por último la imagen creada
+docker run -v "//var/run/docker.sock:/var/run/docker.sock" -p 8080:8080 - v jenkins_home:/var/jenkins_home --name jenkins docker-in-docker-jenkins 
+ejecuto y nos ofrece la contraseña x defecto del usu admin, voy al localhost:8080 y sale jenkins 
+en el pipeline pongo en el stage que instale las dependencias y ejecute los test (jenkins tiene que tener el plugin de dockerpipeline y docker) 
+
+reporte
+
+establecemos post stage en pipeline que publica un html - ver jenkinsfile (el plugin de html publisher está instalado ya sino, habría que hacerlo)
+--una vez ejecutado el job en jenkins - aparece en la columna izquierda un playwright report pero sin nada-- en la config de jenkins script console vamos navegando o hacemos algo ahí en la consola para que refresque cache
+System.setProperty("hudson.model.DirectoryBrowserSupport.CSP","")...esto limpia cache ..volvemos y ya se ve el reporte
+
+
+
+
 
 
